@@ -9,11 +9,7 @@ const router = express.Router();
 
 router.post(
   "/login",
-  [
-    body("email").isEmail().withMessage("Enter Valid Email"),
-    //! not good
-    body("pass").isInt().withMessage("Please Enter Valid Password"),
-  ],
+  [body("email").isEmail().withMessage("Enter Valid Email")],
   login
 );
 
@@ -30,7 +26,7 @@ router.post(
     body("userType")
       .isIn(["students", "instructors"])
       .withMessage("Type must be students or instructors"),
-    body("pass").isInt().withMessage("password must be integer"),
+    body("pass").isStrongPassword().withMessage("password is week"),
     body("passConfirm").custom((value, { req }) => {
       if (value !== req.body.pass) {
         throw new Error("pass confirmation doesn't match pass");

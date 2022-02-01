@@ -37,7 +37,7 @@ const UserModel = new mongoose.Schema({
   },
   //! remember to hash it
   Password: {
-    type: Number,
+    type: String,
     required: true,
   },
 });
