@@ -31,7 +31,7 @@ exports.login = function (request, response, next) {
             .then((result) =>
               response.status(200).json({
                 message: "Login Success Welcome " + result.UserID.FullName,
-                user: result.UserType,
+                userType: result.UserType,
               })
             );
         } else {
