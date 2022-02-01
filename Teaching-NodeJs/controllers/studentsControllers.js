@@ -28,32 +28,32 @@ exports.getStudents = function (request, response, next) {
 };
 
 //add callback
-exports.addStudent = (request, response, next) => {
-  let errors = validationResult(request);
-  if (!errors.isEmpty()) {
-    let error = new Error();
-    error.status = 422;
-    error.message = errors
-      .array()
-      .reduce((current, object) => current + object.msg + " ", "");
-    next(error);
-  } else {
-    let newStudent = new Student({
-      _id: request.body.id,
-      FullName: request.body.fullName,
-      Department: request.body.department,
-    });
-    newStudent
-      .save()
-      .then((result) => {
-        response.status(201).json({ message: "Student added" });
-      })
-      .catch((error) => {
-        error.status = 500;
-        next(error);
-      });
-  }
-};
+// exports.addStudent = (request, response, next) => {
+//   let errors = validationResult(request);
+//   if (!errors.isEmpty()) {
+//     let error = new Error();
+//     error.status = 422;
+//     error.message = errors
+//       .array()
+//       .reduce((current, object) => current + object.msg + " ", "");
+//     next(error);
+//   } else {
+//     let newStudent = new Student({
+//       _id: request.body.id,
+//       FullName: request.body.fullName,
+//       Department: request.body.department,
+//     });
+//     newStudent
+//       .save()
+//       .then((result) => {
+//         response.status(201).json({ message: "Student added" });
+//       })
+//       .catch((error) => {
+//         error.status = 500;
+//         next(error);
+//       });
+//   }
+// };
 
 //update callback
 exports.updateStudent = function (request, response, next) {

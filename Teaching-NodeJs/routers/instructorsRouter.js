@@ -6,15 +6,15 @@ const router = express.Router();
 
 router.get("/", controller.getInstructors);
 //////////////////////////////////////////
-router.post(
-  "/",
-  [
-    body("id").isInt().withMessage("id must be integer"),
-    body("fullName").isAlpha().withMessage("name must be String"),
-    body("department").isInt().withMessage("DeptID must be integer"),
-  ],
-  controller.addInstructor
-);
+// router.post(
+//   "/",
+//   [
+//     body("id").isInt().withMessage("id must be integer"),
+//     body("fullName").isAlpha().withMessage("name must be String"),
+//     body("department").isInt().withMessage("DeptID must be integer"),
+//   ],
+//   controller.addInstructor
+// );
 
 router.put(
   "/",

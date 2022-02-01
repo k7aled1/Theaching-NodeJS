@@ -16,30 +16,30 @@ exports.getInstructors = function (request, response, next) {
 };
 
 //add callback
-exports.addInstructor = (request, response, next) => {
-  let errors = validationResult(request);
-  if (!errors.isEmpty()) {
-    let error = new Error();
-    error.status = 422;
-    error.message = errors
-      .array()
-      .reduce((current, object) => current + object.msg + " ", "");
-    next(error);
-  } else {
-    let newInstructor = new Instructor({
-      _id: request.body.id,
-      FullName: request.body.fullName,
-      Department: request.body.department,
-    });
+// exports.addInstructor = (request, response, next) => {
+//   let errors = validationResult(request);
+//   if (!errors.isEmpty()) {
+//     let error = new Error();
+//     error.status = 422;
+//     error.message = errors
+//       .array()
+//       .reduce((current, object) => current + object.msg + " ", "");
+//     next(error);
+//   } else {
+//     let newInstructor = new Instructor({
+//       _id: request.body.id,
+//       FullName: request.body.fullName,
+//       Department: request.body.department,
+//     });
 
-    newInstructor.save().then((result) => {
-      response
-        .status(201)
-        .json({ message: "Instructor added" })
-        .catch((error) => next(error));
-    });
-  }
-};
+//     newInstructor.save().then((result) => {
+//       response
+//         .status(201)
+//         .json({ message: "Instructor added" })
+//         .catch((error) => next(error));
+//     });
+//   }
+// };
 
 //update callback
 exports.updateInstructor = function (request, response, next) {
