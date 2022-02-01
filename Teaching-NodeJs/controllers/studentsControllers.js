@@ -1,8 +1,9 @@
 //here is the Students controllers
 //cause i will use all of the funcs(callbacks) here every one of it by it self so i will export them individually
-const { query } = require("express");
+const { query, param } = require("express");
 const { validationResult } = require("express-validator");
 const Student = require("../models/StudentModel");
+const UserModel = require("../models/UserModel");
 
 //list callback
 exports.getStudents = function (request, response, next) {
@@ -96,9 +97,16 @@ exports.deleteStudent = function (request, response, next) {
       .reduce((current, object) => current + object.msg + " ", "");
     next(error);
   } else {
-    Student.deleteOne({ _id: request.body.id })
+    Student.deleteOne({ _id: request.query.id })
       .then((res) => {
-        response.status(202).json({ message: "Student Deleted" });
+        UserModel.deleteOne({ UserID: request.query.id })
+          .then((res) => {
+            response.status(202).json({ message: "Student Deleted" });
+          })
+          .catch((error) => {
+            error.status = 500;
+            next(error);
+          });
       })
       .catch((error) => {
         error.status = 500;

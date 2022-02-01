@@ -83,7 +83,7 @@ exports.deleteDepartment = function (request, response, next) {
     // throw error;
     // console.log(errors);
   } else {
-    Department.deleteOne({ _id: request.params.id })
+    Department.deleteOne({ _id: request.query.id })
       .then((result) => {
         response.status(201).json({ message: "Department deleted" });
       })

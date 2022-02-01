@@ -27,8 +27,9 @@ router.put(
 );
 
 router.delete(
-  "/:id",
-  [param("id").isInt().withMessage("id must be number")],
+  "/",
+  //! param doesn't work ?!!!
+  [query("id").isInt().withMessage("id must be number")],
   controller.deleteInstructor
 );
 

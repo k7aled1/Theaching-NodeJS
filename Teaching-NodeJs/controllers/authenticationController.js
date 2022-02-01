@@ -67,6 +67,7 @@ exports.register = function (request, response, next) {
       let newStudent = new StudentModel({
         _id: newUser.UserID,
         FullName: request.body.fullName,
+        Department: request.body.deptId,
       });
 
       newStudent
@@ -89,10 +90,11 @@ exports.register = function (request, response, next) {
           error.status = 500;
           next(error);
         });
-    } else if (newUser.UserType === "instructors") {
+    } else {
       let newInstructor = new InstructorModel({
         _id: newUser.UserID,
         FullName: request.body.fullName,
+        Department: request.body.deptId,
       });
 
       newInstructor

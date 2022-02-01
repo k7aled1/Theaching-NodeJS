@@ -24,8 +24,9 @@ router.post(
 router.put("/", controller.updateDepartment);
 
 router.delete(
-  "/:id",
-  [param("id").isInt().withMessage(" Id should be Integer")],
+  "/",
+  //! param doesn't work ?!!!
+  [query("id").isInt().withMessage(" Id should be Integer")],
   controller.deleteDepartment
 );
 
