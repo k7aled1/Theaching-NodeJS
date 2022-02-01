@@ -23,7 +23,17 @@ exports.login = function (request, response, next) {
     })
       .then((res) => {
         if (res) {
-          response.status(200).json({ message: "Success login" });
+          UserModel.findOne({
+            Email: request.body.email,
+            Password: request.body.pass, //!here
+          })
+            .populate("UserID")
+            .then((result) =>
+              response.status(200).json({
+                message: "Login Success Welcome " + result.UserID.FullName,
+                user: result.UserType,
+              })
+            );
         } else {
           next(new Error("ur not Authorized"));
         }
