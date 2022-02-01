@@ -10,15 +10,17 @@ exports.getStudents = function (request, response, next) {
   Student.find({})
     .populate("Department")
     .then((result) => {
-      // console.log(result);
-      let arr = [];
-      let i = 0;
-      result.forEach((res) => {
-        arr[i++] = res.FullName + " " + res.Department.Name;
-      });
-      console.log(arr);
-      response.status(200).json(arr);
-      // response.send()
+      // // console.log(result);
+      // let arr = [];
+      // let i = 0;
+      // result.forEach((res) => {
+      //   arr[i++] = res.FullName + " " + res.Department.Name;
+      // });
+      // console.log(arr);
+      // response.status(200).json(arr);
+
+      response.status(200).json({ Students: result });
+      // // response.send()
 
       // console.log(result.FullName);
     })

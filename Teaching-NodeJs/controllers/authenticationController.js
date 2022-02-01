@@ -1,4 +1,6 @@
 const UserModel = require("../models/UserModel");
+const StudentModel = require("../models/StudentModel");
+const InstructorModel = require("../models/InstructorModel");
 const { validationResult } = require("express-validator");
 
 // all i will do just exports all callbacks
@@ -45,24 +47,64 @@ exports.register = function (request, response, next) {
   } else {
     //new
     let newUser = new UserModel({
-      // _id: request.body.id,
       UserID: request.body.userId,
       UserType: request.body.userType,
       Email: request.body.email,
       Password: request.body.pass,
     });
 
-    //save
-    newUser
-      .save()
-      .then((res) => {
-        response
-          .status(201)
-          .json({ message: "register Success", data: request.body });
-      })
-      .catch((error) => {
-        error.status = 500;
-        next(error);
+    if (newUser.UserType === "students") {
+      let newStudent = new StudentModel({
+        _id: newUser.UserID,
+        FullName: request.body.fullName,
       });
+
+      newStudent
+        .save()
+        .then((res) => {
+          console.log("student registered ");
+          newUser
+            .save()
+            .then((res) => {
+              response
+                .status(201)
+                .json({ message: "register Success", data: request.body });
+            })
+            .catch((error) => {
+              error.status = 500;
+              next(error);
+            });
+        })
+        .catch((error) => {
+          error.status = 500;
+          next(error);
+        });
+    } else if (newUser.UserType === "instructors") {
+      let newInstructor = new InstructorModel({
+        _id: newUser.UserID,
+        FullName: request.body.fullName,
+      });
+
+      newInstructor
+        .save()
+        .then((res) => {
+          console.log("Instructor registered ");
+          newUser
+            .save()
+            .then((res) => {
+              response
+                .status(201)
+                .json({ message: "register Success", data: request.body });
+            })
+            .catch((error) => {
+              error.status = 500;
+              next(error);
+            });
+        })
+        .catch((error) => {
+          error.status = 500;
+          next(error);
+        });
+    }
   }
 };
